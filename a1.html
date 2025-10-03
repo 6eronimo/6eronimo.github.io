@@ -43,9 +43,20 @@
         <h3>Q1</h3>
         <p><!-- Answer to question 1 --></p>
         <h3>Q2</h3>
-        <p><!-- Answer to question 2 --></p>
+        <p><strong>How many LEDs can blink independently? How much current?</strong></p>
+        <ul>
+          <li><strong>Pins available:</strong> Arduino Uno has 14 digital pins (D0–D13) + 6 analog pins usable as digital (A0–A5) → up to <em>20</em> outputs. Pins D0 (RX) and D1 (TX) are used for the USB serial connection (uploading code and Serial Monitor). If you rely on serial communication, avoid D0/D1, leaving ~<em>18</em> practical pins.</li>
+          <li><strong>Current limits:</strong> Design for ≤ ~20 mA per pin and ≤ ~200 mA total. I target ~<em>10 mA</em> per LED for brightness + safety.</li>
+          <li><strong>Example totals:</strong>
+            <ul>
+              <li>16 LEDs × 10 mA ≈ <em>160 mA</em> (comfortable under ~200 mA)</li>
+              <li>18 LEDs × 10 mA ≈ <em>180 mA</em> (still under, less headroom)</li>
+            </ul>
+          </li>
+          <li><strong>Conclusion:</strong> Practically, about <em>~16 independently blinking LEDs at ~10 mA each</em> is a safe target on an Uno without extra hardware.</li>
+        </ul>
         <h3>Q3</h3>
-        <p><!-- Answer to question 3 --></p>
+        <p><strong>If only one LED is ON at once:</strong> The limit is no longer current draw, but pin count. An Arduino Uno has up to ~20 pins (D0–D13 plus A0–A5). Pins D0 (RX) and D1 (TX) handle USB serial (uploads and Serial Monitor), so if you need serial communication, avoid using them; that leaves ~18 LEDs you can still control independently. Since only one LED is lit at a time, the current is just that single LED’s draw (≈10 mA). This means you can support the full set of ~18 LEDs safely when only one is active at once.</p>
         <h3>Q4</h3>
         <p><!-- Answer to question 4 --></p>
         <h3>Q5</h3>
