@@ -1,18 +1,134 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
-
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
-
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
   <body>
-    <h1>Example Student's Assignment 1!</h1>
-    <div class="header">
-      <img src="red-panda.jpg" />
-      <p>Here is all the documentation for assignment 1!</p>
-    </div>
+    <header class="page-header">
+      <h1>Assignment 1: Blink!</h1>
+      <nav>
+        <a href="index.html">← Back to Home</a>
+      </nav>
+      <p class="tagline">Three-LED Arduino circuit • Schematic • Code • Operation • Q&A</p>
+    </header>
+
+    <main>
+      <!-- Overview -->
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>This page documents my three-LED Arduino circuit for A1: schematic, breadboard build, firmware (with comments above each line), an operation GIF, and short answers. Each image includes a caption explaining choices like resistor values.</p>
+      </section>
+
+      <!-- Materials -->
+      <section id="materials">
+        <h2>Parts & Materials</h2>
+        <ul>
+          <li>Arduino Uno (5 V)</li>
+          <li>3× LEDs (colors of choice)</li>
+          <li>3× current-limiting resistors (see calculation below)</li>
+          <li>Breadboard + jumpers + USB cable</li>
+        </ul>
+      </section>
+
+      <!-- Schematic -->
+      <section id="schematic">
+        <h2>Schematic</h2>
+        <figure>
+          <!-- Replace the src with your actual schematic image path -->
+          <img src="images/a1-schematic.png" alt="Schematic showing three LEDs on pins 3,4,5 with series resistors to GND" />
+          <figcaption>
+            Pin mapping example: D3 → R → LED1 → GND, D4 → R → LED2 → GND, D5 → R → LED3 → GND. One resistor per LED to limit current.
+          </figcaption>
+        </figure>
+        <details>
+          <summary>Resistor value calculation (show your work)</summary>
+          <p>
+            Formula: <code>R = (V<sub>CC</sub> − V<sub>f</sub>) / I</code> with <code>V<sub>CC</sub>=5V</code>.
+            Example targets (edit to match your LEDs):
+          </p>
+          <ul>
+            <li>Red, V<sub>f</sub>≈2.0 V, I≈10 mA ⇒ R≈(5−2.0)/0.01 ≈ 300 Ω → use 330 Ω or 220 Ω.</li>
+            <li>Green, V<sub>f</sub>≈2.2 V, I≈10 mA ⇒ R≈(5−2.2)/0.01 ≈ 280 Ω → use 330 Ω or 270 Ω.</li>
+            <li>Blue, V<sub>f</sub>≈3.0 V, I≈10 mA ⇒ R≈(5−3.0)/0.01 ≈ 200 Ω → use 220 Ω.</li>
+          </ul>
+          <p>State your final chosen resistor values and why (brightness vs. safety margin).</p>
+        </details>
+      </section>
+
+      <!-- Breadboard / Circuit Photo -->
+      <section id="circuit">
+        <h2>Breadboard Circuit</h2>
+        <figure>
+          <!-- Replace the src with your actual build photo path -->
+          <img src="images/a1-circuit.jpg" alt="Photo of the assembled breadboard circuit" />
+          <figcaption>
+            The physical build on a breadboard. Note LED orientation (anode toward the resistor/Arduino pin; cathode to GND) and one resistor per LED.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- Firmware -->
+      <section id="firmware">
+        <h2>Firmware (.ino)</h2>
+        <p>Each non-empty line includes a brief comment above it. Pins 3/4/5 blink independently using <code>millis()</code>-based timing (no blocking <code>delay()</code>).</p>
+        <pre><code class="language-cpp">// Paste your final code here (with a short comment above every non-empty line)
+// Example available in my repo: a1_three_leds_blink.ino
+</code></pre>
+        <p>Reference: <a href="https://www.arduino.cc/reference/en/" target="_blank" rel="noopener">Arduino Language Reference</a></p>
+      </section>
+
+      <!-- Operation GIF -->
+      <section id="operation">
+        <h2>Operation (Animated GIF)</h2>
+        <figure>
+          <!-- Replace the src with your actual GIF path -->
+          <img src="images/a1-blink.gif" alt="Animated GIF showing LEDs blinking independently" />
+          <figcaption>Demonstration of independent blinking patterns (each LED has its own period/duty cycle).</figcaption>
+        </figure>
+      </section>
+
+      <!-- Questions & Answers -->
+      <section id="qa">
+        <h2>Questions & Answers</h2>
+        <ol>
+          <li>
+            <strong>Q1: Voltage vs Time graph for the 3 LEDs</strong>
+            <p>Insert your plot image here:</p>
+            <figure>
+              <!-- Replace the src with your graph image path -->
+              <img src="images/a1-led-voltage-plot.png" alt="Graph of LED voltage vs time for three LEDs" />
+              <figcaption>Each trace shows the LED's forward voltage when ON and ≈0 V when OFF.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <strong>Q2: How many LEDs can blink independently? Current draw?</strong>
+            <p><!-- Write-up placeholder --></p>
+          </li>
+          <li>
+            <strong>Q3 (optional): How many if only one is ON at once?</strong>
+            <p><!-- Write-up placeholder --></p>
+          </li>
+          <li>
+            <strong>Q4: How fast until you can no longer tell they are blinking?</strong>
+            <p><!-- Write-up placeholder --></p>
+          </li>
+          <li>
+            <strong>Q5: AI tools usage / reflection</strong>
+            <p><!-- Write-up placeholder --></p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Submission checklist -->
+      <section id="submission">
+        <h2>Submission Checklist</h2>
+        <ul>
+          <li>Schematic image + caption with resistor calculation rationale</li>
+          <li>Breadboard photo + caption</li>
+          <li>Firmware code block with comments above every non-empty line</li>
+          <li>Animated GIF of operation</li>
+          <li>Q&A section completed</li>
+          <li>Linked from <code>index.html</code> via <code>&lt;a href="a1.html"&gt;</code></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Justis Peppin — HCDE 439</p>
+    </footer>
   </body>
-</html>
