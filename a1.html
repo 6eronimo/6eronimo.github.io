@@ -32,7 +32,55 @@
       </section>
       <section id="firmware-code">
         <h2>Firmware Code</h2>
-        <p><!-- Paste or describe your firmware code here --></p>
+        <pre><code>
+/*
+  Blink
+
+  Turns an LED on for one second, then off for one second, repeatedly.
+
+  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
+  it is attached to digital pin 13; on the MKR1000, it is on pin 6. LED_BUILTIN
+  is set to the correct LED pin independent of which board is used.
+  If you want to know what pin the on-board LED is connected to on your Arduino
+  model, check the Technical Specs of your board at:
+  https://docs.arduino.cc/hardware/
+
+  modified 8 May 2014 by Scott Fitzgerald
+  modified 2 Sep 2016 by Arturo Guadalupi
+  modified 8 Sep 2016 by Colby Newman
+
+  This example code is in the public domain.
+  https://docs.arduino.cc/built-in-examples/basics/Blink/
+
+  Note: This version references the Arduino IDE’s built-in “Blink” example as a base,
+  adapted for three LEDs connected to pins 2, 4, and 6.
+*/
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+  pinMode(2, OUTPUT);  // Set digital pin 2 as output for RED LED
+  pinMode(4, OUTPUT);  // Set digital pin 4 as output for YELLOW LED
+  pinMode(6, OUTPUT);  // Set digital pin 6 as output for BLUE LED
+}
+
+// the loop function runs repeatedly forever
+void loop() {
+  digitalWrite(2, HIGH);  // Turn the RED LED on
+  delay(1000);            // Wait 1 second
+  digitalWrite(2, LOW);   // Turn the RED LED off
+  delay(1000);            // Wait 1 second
+
+  digitalWrite(4, HIGH);  // Turn the YELLOW LED on
+  delay(1000);            // Wait 1 second
+  digitalWrite(4, LOW);   // Turn the YELLOW LED off
+  delay(1000);            // Wait 1 second
+
+  digitalWrite(6, HIGH);  // Turn the BLUE LED on
+  delay(1000);            // Wait 1 second
+  digitalWrite(6, LOW);   // Turn the BLUE LED off
+  delay(1000);            // Wait 1 second
+}
+</code></pre>
       </section>
       <section id="operation-gif">
         <h2>Operation GIF</h2>
@@ -40,27 +88,24 @@
       </section>
       <section id="questions-answers">
         <h2>Questions &amp; Answers</h2>
-        <h3>Q1</h3>
-        <p><!-- Answer to question 1 --></p>
-        <h3>Q2</h3>
-        <p><strong>How many LEDs can blink independently? How much current?</strong></p>
-        <ul>
-          <li><strong>Pins available:</strong> Arduino Uno has 14 digital pins (D0–D13) + 6 analog pins usable as digital (A0–A5) → up to <em>20</em> outputs. Pins D0 (RX) and D1 (TX) are used for the USB serial connection (uploading code and Serial Monitor). If you rely on serial communication, avoid D0/D1, leaving ~<em>18</em> practical pins.</li>
-          <li><strong>Current limits:</strong> Design for ≤ ~20 mA per pin and ≤ ~200 mA total. I target ~<em>10 mA</em> per LED for brightness + safety.</li>
-          <li><strong>Example totals:</strong>
-            <ul>
-              <li>16 LEDs × 10 mA ≈ <em>160 mA</em> (comfortable under ~200 mA)</li>
-              <li>18 LEDs × 10 mA ≈ <em>180 mA</em> (still under, less headroom)</li>
-            </ul>
-          </li>
-          <li><strong>Conclusion:</strong> Practically, about <em>~16 independently blinking LEDs at ~10 mA each</em> is a safe target on an Uno without extra hardware.</li>
-        </ul>
-        <h3>Q3</h3>
-        <p><strong>If only one LED is ON at once:</strong> The limit is no longer current draw, but pin count. An Arduino Uno has up to ~20 pins (D0–D13 plus A0–A5). Pins D0 (RX) and D1 (TX) handle USB serial (uploads and Serial Monitor), so if you need serial communication, avoid using them; that leaves ~18 LEDs you can still control independently. Since only one LED is lit at a time, the current is just that single LED’s draw (≈10 mA). This means you can support the full set of ~18 LEDs safely when only one is active at once.</p>
-        <h3>Q4</h3>
-        <p><!-- Answer to question 4 --></p>
-        <h3>Q5</h3>
-        <p><!-- Answer to question 5 --></p>
+        <h3>Additional Questions:</h3>
+        <ol>
+          <li><strong>Draw a graph where the X axis is time and the Y axis is voltage across the LEDs. Draw a line for each of your 3 LEDs.</strong></li>
+          <p><!-- Answer to question 1 --></p>
+
+          <li><strong>How many LEDs could you blink independently with your Arduino? How much current would that draw?</strong></li>
+          <p>There are 14 digital pins and 6 analog pins meaning there are 20 outputs. We use pins D0 and D1 for uploading code and serial monitoring so those will not be used for LEDs. This means that we have 18 practical pins for blinking LEDs independently. </p>
+          <p>V = I x R</p>
+          <p>5V - 1.8V drop = 3.2V</p>
+          <p>3.2/220 = 14.5 mA per LED x 18 LEDs</p>
+          <p>= 261 mA of current drawn from the blinking LEDs</p>
+
+          <li><strong>How fast do you need to blink your LEDs until you no longer can tell that they are blinking?</strong></li>
+          <p>7ms is the fasting you can tell the LED's are blinking. When I tested 6ms, the LEDs just appeared as if they were on with a steady current</p>
+
+          <li><strong>Did you use AI tools in completing this assignment? If yes, please provide details on how/when, as well as a brief reflection. If no, you can either leave this question blank, or provide other information if you'd like.</strong></li>
+          <p><!-- Answer to question 4 --></p>
+        </ol>
       </section>
     </div>
   </body>
