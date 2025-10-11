@@ -31,9 +31,59 @@
       </section>
       <section id="firmware-code">
         <h2>Firmware Code</h2>
+        <p><em>Note:</em> Based on Arduino’s basic sketch template. Minor fixes were applied for correctness (using <code>pinMode()</code> to set LED pins as <code>OUTPUT</code>, and enabling <code>INPUT_PULLUP</code> for a stable button input if wired to ground).</p>
+        <pre><code>// --- Pin & constant declarations ---
+// Store the button pin number in a constant
+const int buttonPin = 2;           // digital input for the button/tilt switch
+// Variable to hold the current button reading
+int buttonState = 0;               // will store HIGH/LOW from the button
+
+// --- Arduino setup: runs once at power-up/reset ---
+void setup() {
+  // Set PWM-capable LED pins as OUTPUTs (3, 5, 6 drive LEDs through resistors)
+  pinMode(3, OUTPUT);              // configure pin 3 for LED (red channel)
+  pinMode(5, OUTPUT);              // configure pin 5 for LED (green channel)
+  pinMode(6, OUTPUT);              // configure pin 6 for LED (blue/white channel)
+
+  // Configure the button pin; use internal pull-up for stable reads (LOW = pressed)
+  pinMode(buttonPin, INPUT_PULLUP);// enables internal resistor so no external pull-down needed
+}
+
+// --- Arduino loop: runs repeatedly ---
+void loop() {
+  // Read the current state of the button (LOW when pressed with INPUT_PULLUP)
+  buttonState = digitalRead(buttonPin);   // capture HIGH/LOW from the input
+
+  // If the button is pressed, show randomized PWM colors; else, turn LEDs off
+  if (buttonState == LOW) {               // pressed/closed to GND when LOW
+    // Repeat the random display a fixed number of times
+    for (int i = 0; i < 10; i++) {        // for-loop executes 10 steps
+      // Generate random PWM values (0–255) for each LED channel
+      int redValue = random(0, 256);      // random duty for pin 3 (0=off, 255=full)
+      int greenValue = random(0, 256);    // random duty for pin 5
+      int blueValue = random(0, 256);     // random duty for pin 6
+
+      // Apply the PWM values to the LEDs
+      analogWrite(3, redValue);           // set brightness on pin 3
+      analogWrite(5, greenValue);         // set brightness on pin 5
+      analogWrite(6, blueValue);          // set brightness on pin 6
+
+      // Hold the current color for half a second
+      delay(500);                          // wait 500 ms before next random color
+    }
+  } else {
+    // If not pressed, ensure all LEDs are off
+    digitalWrite(3, LOW);                 // turn off LED on pin 3
+    digitalWrite(5, LOW);                 // turn off LED on pin 5
+    digitalWrite(6, LOW);                 // turn off LED on pin 6
+  }
+}
+</code></pre>
       </section>
       <section id="operation-gif">
         <h2>Operation GIF</h2>
+        <p><img src="a2-gif.gif" alt="GIF showing the circuit in operation" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>This GIF demonstrates the circuit in action, showing the LEDs cycling randomly when the button is pressed.</p>
       </section>
       <section id="questions-answers">
         <h2>Questions &amp; Answers (A2)</h2>
