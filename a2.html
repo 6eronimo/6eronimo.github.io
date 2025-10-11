@@ -4,15 +4,60 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+    <title>A2: Multi-LED + Switch + PWM</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+      /* Force header content to stack vertically (rows) under the panda image */
+      .header { display: block; }
+      .header img { display: block; max-width: 100%; height: auto; margin-bottom: 1rem; }
+      .header section { display: block; width: 100%; margin: 1rem 0; }
+    </style>
   </head>
   <body>
-    <h1>Example Student's Assignment 2!</h1>
+    <h1>Assignment 2: Multi-LED + Switch + PWM</h1>
     <div class="header">
-      <img src="red-panda.jpg" />
-      <p>Here is all the documentation for assignment 2!</p>
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>This assignment builds a multi‑LED circuit controlled by a physical input (button or tilt switch) and Arduino code that uses a for‑loop, digitalWrite(), digitalRead(), and analogWrite() (PWM). You will document the schematic, breadboard circuit, firmware, and an animated GIF of the behavior. Explanations include resistor choices (LEDs and button), battery‑life estimate, and a measured vs. theoretical LED forward‑voltage comparison.</p>
+      </section>
+      <section id="schematic">
+        <h2>Schematic (with Resistor Calculation)</h2>
+      </section>
+      <section id="breadboard-circuit">
+        <h2>Breadboard Circuit</h2>
+      </section>
+      <section id="firmware-code">
+        <h2>Firmware Code</h2>
+      </section>
+      <section id="operation-gif">
+        <h2>Operation GIF</h2>
+      </section>
+      <section id="questions-answers">
+        <h2>Questions &amp; Answers (A2)</h2>
+        <ol>
+          <li>
+            <strong>1: PWM chart — voltage across an LED for analogWrite(64), analogWrite(128), analogWrite(255).</strong>
+          </li>
+          <li>
+            <strong>2: Battery‑life estimate for a 1200 mAh battery.</strong>
+          </li>
+          <li>
+            <strong>3: Measured LED forward voltage vs. theoretical.</strong>
+          </li>
+          <li>
+            <strong>4: AI tool usage.</strong>
+          </li>
+        </ol>
+      </section>
+      <section id="calculations">
+        <h2>Calculations &amp; Rationale</h2>
+        <h3>LED Resistor Selection</h3>
+        <h3>Button Current Limiting</h3>
+      </section>
+      <section id="reflection">
+        <h2>Reflection</h2>
+      </section>
     </div>
   </body>
 </html>
