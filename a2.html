@@ -34,48 +34,62 @@
         <p><em>Note:</em> Based on Arduino’s basic sketch template. Minor fixes were applied for correctness (using <code>pinMode()</code> to set LED pins as <code>OUTPUT</code>, and enabling <code>INPUT_PULLUP</code> for a stable button input if wired to ground).</p>
         <pre><code>// --- Pin & constant declarations ---
 // Store the button pin number in a constant
-const int buttonPin = 2;           // digital input for the button/tilt switch
+const int buttonPin = 2;           
 // Variable to hold the current button reading
-int buttonState = 0;               // will store HIGH/LOW from the button
+int buttonState = 0;               
 
 // --- Arduino setup: runs once at power-up/reset ---
 void setup() {
   // Set PWM-capable LED pins as OUTPUTs (3, 5, 6 drive LEDs through resistors)
-  pinMode(3, OUTPUT);              // configure pin 3 for LED (red channel)
-  pinMode(5, OUTPUT);              // configure pin 5 for LED (green channel)
-  pinMode(6, OUTPUT);              // configure pin 6 for LED (blue/white channel)
+  pinMode(3, OUTPUT);              
+  pinMode(5, OUTPUT);              
+  pinMode(6, OUTPUT);              
 
   // Configure the button pin; use internal pull-up for stable reads (LOW = pressed)
-  pinMode(buttonPin, INPUT_PULLUP);// enables internal resistor so no external pull-down needed
+  pinMode(buttonPin, INPUT_PULLUP);
 }
 
 // --- Arduino loop: runs repeatedly ---
 void loop() {
   // Read the current state of the button (LOW when pressed with INPUT_PULLUP)
-  buttonState = digitalRead(buttonPin);   // capture HIGH/LOW from the input
+  buttonState = digitalRead(buttonPin);   
 
-  // If the button is pressed, show randomized PWM colors; else, turn LEDs off
-  if (buttonState == LOW) {               // pressed/closed to GND when LOW
+  // If the button is pressed, show randomized PWM colors; else, fade one LED
+  if (buttonState == LOW) {               
+
     // Repeat the random display a fixed number of times
-    for (int i = 0; i < 10; i++) {        // for-loop executes 10 steps
+    for (int i = 0; i < 10; i++) {        
+
       // Generate random PWM values (0–255) for each LED channel
-      int redValue = random(0, 256);      // random duty for pin 3 (0=off, 255=full)
-      int greenValue = random(0, 256);    // random duty for pin 5
-      int blueValue = random(0, 256);     // random duty for pin 6
+      int redValue = random(0, 256);      
+      int greenValue = random(0, 256);    
+      int blueValue = random(0, 256);     
 
       // Apply the PWM values to the LEDs
-      analogWrite(3, redValue);           // set brightness on pin 3
-      analogWrite(5, greenValue);         // set brightness on pin 5
-      analogWrite(6, blueValue);          // set brightness on pin 6
+      analogWrite(3, redValue);           
+      analogWrite(5, greenValue);         
+      analogWrite(6, blueValue);          
 
       // Hold the current color for half a second
-      delay(500);                          // wait 500 ms before next random color
+      delay(500);                          
     }
+
   } else {
-    // If not pressed, ensure all LEDs are off
-    digitalWrite(3, LOW);                 // turn off LED on pin 3
-    digitalWrite(5, LOW);                 // turn off LED on pin 5
-    digitalWrite(6, LOW);                 // turn off LED on pin 6
+    // Fade up smoothly on LED connected to pin 3
+    for (int v = 0; v <= 255; v++) {      
+      analogWrite(3, v);                  
+      delay(5);                           
+    }
+
+    // Fade down smoothly on LED connected to pin 3
+    for (int v = 255; v >= 0; v--) {      
+      analogWrite(3, v);                  
+      delay(5);                           
+    }
+
+    // Keep other LEDs off during fade
+    digitalWrite(5, LOW);                 
+    digitalWrite(6, LOW);                 
   }
 }
 </code></pre>
