@@ -19,10 +19,12 @@
     <div class="header">
       <section id="overview">
         <h2>Overview</h2>
-        <p>This assignment builds a multi‑LED circuit controlled by a physical input (button or tilt switch) and Arduino code that uses a for‑loop, digitalWrite(), digitalRead(), and analogWrite() (PWM). You will document the schematic, breadboard circuit, firmware, and an animated GIF of the behavior. Explanations include resistor choices (LEDs and button), battery‑life estimate, and a measured vs. theoretical LED forward‑voltage comparison.</p>
+        <p>This project uses an Arduino, three LEDs, and a button to show how digital and analog signals work together. The circuit uses digitalRead() to detect button input, digitalWrite() to turn LEDs on and off, and analogWrite() for smooth color fades. The documentation includes the schematic, breadboard photo, firmware code, and a GIF showing the circuit in action.</p>
       </section>
       <section id="schematic">
         <h2>Schematic (with Resistor Calculation)</h2>
+        <p><img src="a2-schematic.jpg" alt="Schematic for A2 circuit" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>This schematic shows three LEDs, each with its own resistor (220 Ω for red and green, 100 Ω for blue). The button connects to pin 2 using INPUT_PULLUP, allowing the Arduino to detect when it’s pressed.</p>
       </section>
       <section id="breadboard-circuit">
         <h2>Breadboard Circuit</h2>
@@ -138,6 +140,7 @@ void loop() {
           </li>
           <li>
             <strong>2: Battery‑life estimate for a 1200 mAh battery.</strong>
+            <p>For this circuit, the red and green LEDs each have a forward voltage drop of about 2.0 V, and the blue LED has a drop of about 3.3 V. Using 220 Ω resistors for red and green and a 100 Ω resistor for blue, their currents at full brightness are approximately 13.6 mA (red), 13.6 mA (green), and 17 mA (blue). Since the LEDs are driven by PWM at about 50% duty cycle, their average currents are roughly half those values: 6.8 mA, 6.8 mA, and 8.5 mA respectively. When the button is pressed and all three LEDs are active, the total current draw is around 22 mA, giving an estimated runtime of about 55 hours from a 1200 mAh battery. When only the blue LED fades while idle, the current drops to around 8.5 mA, extending the estimated runtime to about 140 hours. This calculation ignores the Arduino’s own power consumption as specified by the prompt.</p>
           </li>
           <li>
             <strong>3: Measured LED forward voltage vs. theoretical.</strong>
@@ -146,11 +149,6 @@ void loop() {
             <strong>4: AI tool usage.</strong>
           </li>
         </ol>
-      </section>
-      <section id="calculations">
-        <h2>Calculations &amp; Rationale</h2>
-        <h3>LED Resistor Selection</h3>
-        <h3>Button Current Limiting</h3>
       </section>
       <section id="reflection">
         <h2>Reflection</h2>
