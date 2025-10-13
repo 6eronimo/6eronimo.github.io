@@ -32,64 +32,95 @@
       <section id="firmware-code">
         <h2>Firmware Code</h2>
         <p><em>Note:</em> Based on Arduino’s basic sketch template. Minor fixes were applied for correctness (using <code>pinMode()</code> to set LED pins as <code>OUTPUT</code>, and enabling <code>INPUT_PULLUP</code> for a stable button input if wired to ground).</p>
-        <pre><code>// --- Pin & constant declarations ---
-// Store the button pin number in a constant
-const int buttonPin = 2;           
-// Variable to hold the current button reading
-int buttonState = 0;               
+        <pre><code>// --- Note on template & wiring ---
+// Based on Arduino’s basic sketch template. Comments are placed ABOVE each line.
 
-// --- Arduino setup: runs once at power-up/reset ---
+// Pin setup 
+// Define the digital pin used for the button
+const int buttonPin = 2;  
+// Store the current button state (HIGH = pressed in this wiring)
+int buttonState = 0;      
+
+// Runs once at startup 
+// Configure pin 3 as OUTPUT for the Blue LED (PWM-capable)
 void setup() {
-  // Set PWM-capable LED pins as OUTPUTs (3, 5, 6 drive LEDs through resistors)
-  pinMode(3, OUTPUT);              
-  pinMode(5, OUTPUT);              
-  pinMode(6, OUTPUT);              
-
-  // Configure the button pin; use internal pull-up for stable reads (LOW = pressed)
-  pinMode(buttonPin, INPUT_PULLUP);
+  // Set Blue LED pin
+  pinMode(3, OUTPUT);  
+  // Set Green LED pin
+  pinMode(5, OUTPUT);  
+  // Set Red LED pin
+  pinMode(6, OUTPUT);  
+  // Enable internal pull-up on the button pin (reads HIGH when not connected to GND)
+  pinMode(buttonPin, INPUT_PULLUP);  
 }
 
-// --- Arduino loop: runs repeatedly ---
+// Runs repeatedly 
+// Read the button state (HIGH = pressed for your wiring)
 void loop() {
-  // Read the current state of the button (LOW when pressed with INPUT_PULLUP)
-  buttonState = digitalRead(buttonPin);   
+  // Capture current button value
+  buttonState = digitalRead(buttonPin);
 
-  // If the button is pressed, show randomized PWM colors; else, fade one LED
-  if (buttonState == LOW) {               
+  // If the button is pressed, fade between colors (red→green→blue→red)
+  if (buttonState == HIGH) {
 
-    // Repeat the random display a fixed number of times
-    for (int i = 0; i < 10; i++) {        
+    // Fade from red to green while button remains pressed
+    for (int i = 0; i <= 255 && digitalRead(buttonPin) == HIGH; i++) {
+      // Decrease red brightness as i increases
+      analogWrite(6, 255 - i);  
+      // Increase green brightness as i increases
+      analogWrite(5, i);        
+      // Keep blue off during this segment
+      digitalWrite(3, LOW);     
+      // Short delay for smooth transition
+      delay(5);                 
+    }
 
-      // Generate random PWM values (0–255) for each LED channel
-      int redValue = random(0, 256);      
-      int greenValue = random(0, 256);    
-      int blueValue = random(0, 256);     
+    // Fade from green to blue while button remains pressed
+    for (int i = 0; i <= 255 && digitalRead(buttonPin) == HIGH; i++) {
+      // Ensure red is off in this segment
+      digitalWrite(6, LOW);     
+      // Decrease green brightness
+      analogWrite(5, 255 - i);  
+      // Increase blue brightness
+      analogWrite(3, i);        
+      // Short delay for smooth transition
+      delay(5);                 
+    }
 
-      // Apply the PWM values to the LEDs
-      analogWrite(3, redValue);           
-      analogWrite(5, greenValue);         
-      analogWrite(6, blueValue);          
-
-      // Hold the current color for half a second
-      delay(500);                          
+    // Fade from blue to red while button remains pressed
+    for (int i = 0; i <= 255 && digitalRead(buttonPin) == HIGH; i++) {
+      // Increase red brightness
+      analogWrite(6, i);        
+      // Ensure green is off
+      digitalWrite(5, LOW);     
+      // Decrease blue brightness
+      analogWrite(3, 255 - i);  
+      // Short delay for smooth transition
+      delay(5);                 
     }
 
   } else {
-    // Fade up smoothly on LED connected to pin 3
-    for (int v = 0; v <= 255; v++) {      
-      analogWrite(3, v);                  
-      delay(5);                           
+    // When not pressed, fade only the blue LED up and down
+
+    // Ramp blue from 0 → 255 (brighter)
+    for (int v = 0; v <= 255; v++) {
+      // Set blue brightness to v
+      analogWrite(3, v);  
+      // Short delay for smooth transition
+      delay(5);
     }
 
-    // Fade down smoothly on LED connected to pin 3
-    for (int v = 255; v >= 0; v--) {      
-      analogWrite(3, v);                  
-      delay(5);                           
+    // Ramp blue from 255 → 0 (dimmer)
+    for (int v = 255; v >= 0; v--) {
+      // Set blue brightness to v
+      analogWrite(3, v);  
+      // Short delay for smooth transition
+      delay(5);
     }
 
-    // Keep other LEDs off during fade
-    digitalWrite(5, LOW);                 
-    digitalWrite(6, LOW);                 
+    // Ensure red and green are fully off during the blue fade
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
   }
 }
 </code></pre>
