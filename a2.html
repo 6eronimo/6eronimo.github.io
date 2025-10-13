@@ -133,20 +133,23 @@ void loop() {
         <p>This GIF demonstrates the circuit in action, showing the LEDs cycling randomly when the button is pressed.</p>
       </section>
       <section id="questions-answers">
-        <h2>Questions &amp; Answers (A2)</h2>
+        <h2>Questions &amp; Answers</h2>
         <ol>
           <li>
-            <strong>1: PWM chart — voltage across an LED for analogWrite(64), analogWrite(128), analogWrite(255).</strong>
+            <strong>PWM chart — voltage across an LED for analogWrite(64), analogWrite(128), analogWrite(255).</strong>
+            <p><img src="a2-pwm-chart.png" alt="PWM chart showing LED voltage for analogWrite(64), (128), and (255)" style="max-width:100%;height:auto;border-radius:8px;"></p>
+            <p>This chart shows how the LED voltage changes with PWM. analogWrite(64) ≈ 25% duty, analogWrite(128) ≈ 50%, and analogWrite(255) = 100%. The LED receives short pulses of voltage, and the average brightness increases with duty cycle.</p>
           </li>
           <li>
-            <strong>2: Battery‑life estimate for a 1200 mAh battery.</strong>
+            <strong>Battery‑life estimate for a 1200 mAh battery.</strong>
             <p>For this circuit, the red and green LEDs each have a forward voltage drop of about 2.0 V, and the blue LED has a drop of about 3.3 V. Using 220 Ω resistors for red and green and a 100 Ω resistor for blue, their currents at full brightness are approximately 13.6 mA (red), 13.6 mA (green), and 17 mA (blue). Since the LEDs are driven by PWM at about 50% duty cycle, their average currents are roughly half those values: 6.8 mA, 6.8 mA, and 8.5 mA respectively. When the button is pressed and all three LEDs are active, the total current draw is around 22 mA, giving an estimated runtime of about 55 hours from a 1200 mAh battery. When only the blue LED fades while idle, the current drops to around 8.5 mA, extending the estimated runtime to about 140 hours. This calculation ignores the Arduino’s own power consumption as specified by the prompt.</p>
           </li>
           <li>
-            <strong>3: Measured LED forward voltage vs. theoretical.</strong>
+            <strong>Measured LED forward voltage vs. theoretical.</strong>
+            <p>The actual forward voltage for the blue LED was measured at approximately 3.5 V, while the theoretical forward voltage is around 3.3 V. This small difference is expected and can be attributed to variations in LED manufacturing, measurement accuracy, and the current level during testing.</p>
           </li>
           <li>
-            <strong>4: AI tool usage.</strong>
+            <strong>I utilized an AI tool that assists the formatting and debugging of my HTML/CSS styling as well as for the data visualization based off my Arduino code.</strong>
           </li>
         </ol>
       </section>
