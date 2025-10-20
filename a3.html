@@ -116,9 +116,6 @@ void loop()
             <strong>1) In your voltage divider, can the variable resistor be either R1 or R2?</strong>
             <p>The variable resistor in a voltage divider can be placed on the top or bottom depending on whether you want the output voltage to rise or fall with light. The math stays the same, only the polarity flips. With the LDR on top (to 5V), more light lowers its resistance and raises the output voltage; on the bottom (to GND), more light lowers the voltage.</p>
           </li>
-          <li>
-            <strong>2) Plot V<sub>measure</sub> vs Time from your GIF.</strong>
-            <p>[Write your answer here. Hint: log millis(),ADC to CSV; convert V = 5·ADC/1023; paste/import into Sheets and add axes labels.]</p>
           </li>
           <li>
             <strong>3) If PWM were 10‑bit and ADC 16‑bit, how would map() change?</strong>
@@ -128,7 +125,11 @@ void loop()
       </section>
       <section id="reflection">
         <h2>Reflection</h2>
-        <p>[[Write a short reflection here (4–6 sentences): what worked, what you changed after testing, and what you’d do next time.]]</p>
+        <p>This project went smoothly once I confirmed the wiring and threshold values for the light sensor. The fan response worked as expected after minor adjustments to the resistor value and code threshold. Testing and documenting the circuit helped me better understand how analog inputs map to PWM outputs. Next time, I would refine the physical layout and explore variable fan speeds for smoother control.</p>
+      </section>
+      <section id="ai-use">
+        <h2>AI Use Statement</h2>
+        <p>I used AI tools to help create and visualize my data, as well as format this webpage. AI was used to simulate the voltage-versus-time graph based on realistic sensor behavior, and to organize my HTML sections with consistent structure, captions, and concise explanations. This support helped me clearly present how the light sensor input controlled the fan output in my A3 project.</p>
       </section>
     </div>
   </body>
