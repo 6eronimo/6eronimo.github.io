@@ -23,8 +23,15 @@
       </section>
       <section id="schematic">
         <h2>Schematic (show values & calculation)</h2>
-        <p><img src="a3-schematic.png" alt="Schematic for A3 circuit" style="max-width:100%;height:auto;border-radius:8px;"></p>
-        <p>Upload your schematic image here. In the caption, explain the sensor’s voltage‑divider values (e.g., 10 kΩ fixed), and show expected node voltages (min/mid/max) and their ADC equivalents.</p>
+        <p><img src="a3-schematic.jpg" alt="A3 schematic with 4.7kΩ resistor voltage divider and fan control" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>This schematic shows the light sensor circuit for A3. The photoresistor (LDR) and a 4.7 kΩ resistor form a voltage divider feeding A0 on the Arduino. As light intensity increases, the LDR resistance decreases and the voltage at A0 rises.</p>
+        <p><strong>Voltage calculations:</strong></p>
+        <ul>
+          <li>Dark (~100 kΩ): Vout ≈ 5 × (4.7 k / (100 k + 4.7 k)) ≈ 0.22 V (ADC ≈ 45)</li>
+          <li>Medium (~10 kΩ): Vout ≈ 5 × (4.7 k / (10 k + 4.7 k)) ≈ 1.6 V (ADC ≈ 327)</li>
+          <li>Bright (~1 kΩ): Vout ≈ 5 × (4.7 k / (1 k + 4.7 k)) ≈ 4.1 V (ADC ≈ 838)</li>
+        </ul>
+        <p>These approximate voltages correspond to expected analog readings from about 45 → 838, which are mapped to fan output levels in the firmware code.</p>
       </section>
       <section id="breadboard-circuit">
         <h2>Breadboard Circuit</h2>
