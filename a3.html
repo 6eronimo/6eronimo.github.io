@@ -105,12 +105,16 @@ void loop()
         <p><img src="a3-gif.gif" alt="A3 GIF showing light sensor controlling fan" style="max-width:100%;height:auto;border-radius:8px;"></p>
         <p>This GIF shows the A3 circuit in action: when light increases on the photoresistor, the fan activates and spins, and when it’s darker, the fan stops.</p>
       </section>
+      <section id="graph">
+        <h2>Graph</h2>
+        <p><img src="a3-graph.jpg" alt="Graph showing sensor readings over time" style="max-width:100%;height:auto;border-radius:8px;"></p>
+      </section>
       <section id="questions-answers">
         <h2>Additional Questions (A3)</h2>
         <ol>
           <li>
             <strong>1) In your voltage divider, can the variable resistor be either R1 or R2?</strong>
-            <p>[Write your answer here. Hint: yes—math is the same, polarity flips. Include a short numeric example for each orientation.]</p>
+            <p>The variable resistor in a voltage divider can be placed on the top or bottom depending on whether you want the output voltage to rise or fall with light. The math stays the same, only the polarity flips. With the LDR on top (to 5V), more light lowers its resistance and raises the output voltage; on the bottom (to GND), more light lowers the voltage.</p>
           </li>
           <li>
             <strong>2) Plot V<sub>measure</sub> vs Time from your GIF.</strong>
@@ -118,7 +122,7 @@ void loop()
           </li>
           <li>
             <strong>3) If PWM were 10‑bit and ADC 16‑bit, how would map() change?</strong>
-            <p>[Write your answer here. Hint: map(raw16, 0, 65535, 0, 1023) and note smoother control.]</p>
+            <p>If PWM were 10-bit and ADC 16-bit, the map function would scale to map(raw16, 0, 65535, 0, 1023). The higher resolution would make the output smoother and more precise.</p>
           </li>
         </ol>
       </section>
