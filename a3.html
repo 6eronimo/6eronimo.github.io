@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>A3: Input → Output</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+      /* Force header content to stack vertically (rows) under the panda image */
+      .header { display: block; }
+      .header img { display: block; max-width: 100%; height: auto; margin-bottom: 1rem; }
+      .header section { display: block; width: 100%; margin: 1rem 0; }
+    </style>
+  </head>
+  <body>
+    <h1>Assignment 3: Input → Output</h1>
+    <div class="header">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>This project demonstrates input–output control using a photoresistor (light sensor) and a DC fan. The sensor forms a voltage divider connected to A0, providing analog readings that vary with light intensity. These readings are mapped to control the fan’s behavior through PWM signals. The documentation includes the schematic, circuit photo, code, operation GIF, Serial Monitor data, voltage calculations, and responses to the required questions.</p>
+      </section>
+      <section id="schematic">
+        <h2>Schematic (show values & calculation)</h2>
+        <p><img src="a3-schematic.png" alt="Schematic for A3 circuit" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>Upload your schematic image here. In the caption, explain the sensor’s voltage‑divider values (e.g., 10 kΩ fixed), and show expected node voltages (min/mid/max) and their ADC equivalents.</p>
+      </section>
+      <section id="breadboard-circuit">
+        <h2>Breadboard Circuit</h2>
+        <p><img src="a3-circut.jpg" alt="A3 Breadboard photo showing photoresistor and fan wiring" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>This is my A3 circuit: a photoresistor (light sensor) connected as a voltage divider into A0, and a DC fan connected to digital pins 8 and 12 for direction control. As light increases, the LDR’s resistance drops, increasing A0 voltage and triggering the fan to spin. The wiring matches the schematic and shares a common ground with the Arduino.</p>
+      </section>
+      <section id="firmware-code">
+        <h2>Firmware Code (commented line‑by‑line)</h2>
+        <p><em>Note:</em> Paste your final A3 Arduino sketch below. Ensure every non‑blank line has a short comment above it and that you use analogRead(), map(), if, analogWrite(), and Serial.print() with a unique message.</p>
+        <pre><code>// --- A3 Firmware Placeholder ---
+// Paste your final A3 Arduino code here.
+// Requirement checklist:
+// - analogRead() from the sensor divider (e.g., A0)
+// - map() to scale sensor range to output range
+// - if (...) { } for decision/threshold logic
+// - analogWrite() to drive the non-LED output (or a test LED while wiring)
+// - Serial.print() with a unique message (not the example)
+// - Short comment above every non-blank line
+
+// Example variable stubs (delete/replace with your real pins):
+// const int pinSensor = A0;
+// const int pinOutput = 9; // e.g., fan PWM or servo signal
+
+// void setup() {
+//   // Serial.begin(9600);
+//   // pinMode(pinOutput, OUTPUT);
+// }
+
+// void loop() {
+//   // int raw = analogRead(pinSensor);
+//   // int pwm = map(raw, 0, 1023, 0, 255);
+//   // if (raw < 100) { analogWrite(pinOutput, 0); } else { analogWrite(pinOutput, pwm); }
+//   // Serial.print("ADC="); Serial.print(raw); Serial.print(" PWM="); Serial.println(pwm);
+//   // delay(50);
+// }
+</code></pre>
+      </section>
+      <section id="operation-gif">
+        <h2>Operation GIF & Serial Screenshot</h2>
+        <p><img src="a3-demo.gif" alt="A3 operation GIF" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>Record a short GIF of your circuit operating (sensor change → output change). Also include a separate Serial Monitor screenshot showing your unique printed messages for dark/mid/bright (or cool/warm) cases.</p>
+      </section>
+      <section id="questions-answers">
+        <h2>Additional Questions (A3)</h2>
+        <ol>
+          <li>
+            <strong>1) In your voltage divider, can the variable resistor be either R1 or R2?</strong>
+            <p>[Write your answer here. Hint: yes—math is the same, polarity flips. Include a short numeric example for each orientation.]</p>
+          </li>
+          <li>
+            <strong>2) Plot V<sub>measure</sub> vs Time from your GIF.</strong>
+            <p>[Write your answer here. Hint: log millis(),ADC to CSV; convert V = 5·ADC/1023; paste/import into Sheets and add axes labels.]</p>
+          </li>
+          <li>
+            <strong>3) If PWM were 10‑bit and ADC 16‑bit, how would map() change?</strong>
+            <p>[Write your answer here. Hint: map(raw16, 0, 65535, 0, 1023) and note smoother control.]</p>
+          </li>
+        </ol>
+      </section>
+      <section id="reflection">
+        <h2>Reflection</h2>
+        <p>[[Write a short reflection here (4–6 sentences): what worked, what you changed after testing, and what you’d do next time.]]</p>
+      </section>
+    </div>
+  </body>
+</html>
