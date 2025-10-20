@@ -32,40 +32,71 @@
         <p>This is my A3 circuit: a photoresistor (light sensor) connected as a voltage divider into A0, and a DC fan connected to digital pins 8 and 12 for direction control. As light increases, the LDR’s resistance drops, increasing A0 voltage and triggering the fan to spin. The wiring matches the schematic and shares a common ground with the Arduino.</p>
       </section>
       <section id="firmware-code">
-        <h2>Firmware Code (commented line‑by‑line)</h2>
-        <p><em>Note:</em> Paste your final A3 Arduino sketch below. Ensure every non‑blank line has a short comment above it and that you use analogRead(), map(), if, analogWrite(), and Serial.print() with a unique message.</p>
-        <pre><code>// --- A3 Firmware Placeholder ---
-// Paste your final A3 Arduino code here.
-// Requirement checklist:
-// - analogRead() from the sensor divider (e.g., A0)
-// - map() to scale sensor range to output range
-// - if (...) { } for decision/threshold logic
-// - analogWrite() to drive the non-LED output (or a test LED while wiring)
-// - Serial.print() with a unique message (not the example)
-// - Short comment above every non-blank line
+        <h2>Firmware Code</h2>
+        <pre><code>
+// Sensor: LDR (photoresistor) in a voltage divider
+// Output: Fan controlled by two digital pins (8 and 12)
+// Create a variable to store the sensor reading from A0
+int sensorValue = 0;
+// Variable placeholders
+int voltage;
+int timer = millis();  // holds startup time, not used directly
 
-// Example variable stubs (delete/replace with your real pins):
-// const int pinSensor = A0;
-// const int pinOutput = 9; // e.g., fan PWM or servo signal
+void setup()
+{
+  // Set A0 as an input to read the voltage divider from the LDR
+  pinMode(A0, INPUT);
 
-// void setup() {
-//   // Serial.begin(9600);
-//   // pinMode(pinOutput, OUTPUT);
-// }
+  // Start Serial Monitor at 9600 baud for logging and screenshots
+  Serial.begin(9600);
 
-// void loop() {
-//   // int raw = analogRead(pinSensor);
-//   // int pwm = map(raw, 0, 1023, 0, 255);
-//   // if (raw < 100) { analogWrite(pinOutput, 0); } else { analogWrite(pinOutput, pwm); }
-//   // Serial.print("ADC="); Serial.print(raw); Serial.print(" PWM="); Serial.println(pwm);
-//   // delay(50);
-// }
+  // Configure D9 as a PWM output (for test LED brightness)
+  pinMode(9, OUTPUT);
+
+  // Configure fan control pins (8 and 12) as outputs
+  pinMode(12, OUTPUT);
+  pinMode(8, OUTPUT);
+
+  // Ensure the fan is stopped when the Arduino first powers up
+  digitalWrite(8, LOW);
+  digitalWrite(12, LOW);
+}
+
+void loop()
+{
+  // Read the analog value (0–1023) from the LDR voltage divider
+  sensorValue = analogRead(A0);
+
+  // Print the sensor value with a unique label for Serial Monitor
+  Serial.print("LDR=");
+  Serial.println(sensorValue);
+
+  // Map the 10-bit sensor range (0–1023) to 8-bit PWM (0–255)
+  // This controls the brightness of the LED on D9
+  analogWrite(9, map(sensorValue, 0, 1023, 0, 255));
+
+  // If light is above threshold (~200), spin fan in reverse direction
+  if (sensorValue > 200){
+    // Drive D12 HIGH and D8 LOW to reverse motor polarity
+    digitalWrite(8, LOW);    // one side of the motor LOW
+    digitalWrite(12, HIGH);  // the other side HIGH
+  }
+  // Otherwise, keep both pins LOW so the fan stays off
+  else{
+    // Set both control pins LOW to stop the fan
+    digitalWrite(8, LOW);
+    digitalWrite(12, LOW);
+  }
+
+  // Short delay (100 ms) to stabilize readings and Serial output
+  delay(100);
+}
 </code></pre>
       </section>
       <section id="operation-gif">
         <h2>Operation GIF & Serial Screenshot</h2>
-        <p><img src="a3-demo.gif" alt="A3 operation GIF" style="max-width:100%;height:auto;border-radius:8px;"></p>
-        <p>Record a short GIF of your circuit operating (sensor change → output change). Also include a separate Serial Monitor screenshot showing your unique printed messages for dark/mid/bright (or cool/warm) cases.</p>
+        <p><img src="a3-gif.gif" alt="A3 GIF showing light sensor controlling fan" style="max-width:100%;height:auto;border-radius:8px;"></p>
+        <p>This GIF shows the A3 circuit in action: when light increases on the photoresistor, the fan activates and spins, and when it’s darker, the fan stops.</p>
       </section>
       <section id="questions-answers">
         <h2>Additional Questions (A3)</h2>
