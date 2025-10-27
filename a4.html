@@ -19,7 +19,7 @@
     <div class="header">
       <section id="overview">
         <h2>Overview</h2>
-        <p>Placeholder text for Assignment 4 overview. This section will describe the project goals and general description of the input-output control system.</p>
+        <p>This project demonstrates how to use Arduino libraries to connect an ultrasonic sensor and an LCD display for real-time distance measurement. It focuses on translating sensor input into clear, readable output while learning to manage errors and noise in data collection.</p>
       </section>
       <section id="schematic">
         <h2>Schematic (show values & calculation)</h2>
@@ -107,69 +107,42 @@ void loop() {
       </section>
       <section id="questions">
         <h2>Questions</h2>
-        <p><strong>Q1.</strong> Pin 9 (servo signal) outputs a 5&nbsp;V digital PWM pulse every ~20&nbsp;ms; the high pulse widens from ~1.0&nbsp;ms (pos&nbsp;0) to ~2.0&nbsp;ms (pos&nbsp;180) as <code>myservo.write(pos)</code> steps every 100&nbsp;ms.</p>
-        <svg width="640" height="180" role="img" aria-label="PWM voltage vs time at pin 9">
-          <title>PWM voltage vs time at pin 9</title>
-          <!-- Axes -->
-          <line x1="40" y1="140" x2="620" y2="140" stroke="black" />
-          <line x1="40" y1="20"  x2="40"  y2="140" stroke="black" />
-          <text x="300" y="170" font-size="12">time (ms)</text>
-          <text x="5" y="18" font-size="12" transform="rotate(-90 10,18)">voltage (V)</text>
-          <text x="10" y="30" font-size="12">5V</text>
-          <text x="10" y="145" font-size="12">0V</text>
-          <!-- Two 20 ms periods: first ~1 ms high, second ~2 ms high -->
-          <!-- Period 1: 0–20 ms -->
-          <polyline points="40,140 60,140 60,40 68,40 68,140 160,140" fill="none" stroke="black" />
-          <!-- Period 2: 20–40 ms -->
-          <polyline points="160,140 180,140 180,40 200,40 200,140 280,140" fill="none" stroke="black" />
-          <!-- Dotted baseline and labels -->
-          <line x1="40" y1="40" x2="620" y2="40" stroke="gray" stroke-dasharray="4 4"/>
-          <text x="62" y="60" font-size="10">~1 ms high</text>
-          <text x="182" y="60" font-size="10">~2 ms high</text>
-          <text x="85" y="155" font-size="10">~20 ms</text>
-          <line x1="68" y1="150" x2="160" y2="150" stroke="black"/>
-          <text x="205" y="155" font-size="10">~20 ms</text>
-          <line x1="200" y1="150" x2="280" y2="150" stroke="black"/>
-        </svg>
-        <p><strong>Q2.</strong> Handle ~1% erroneous readings by validating and re‑sampling, or using a small median/majority vote:</p>
-        <pre><code>// Pseudocode
-int readStable() {
-  const int N = 5;                    // small sample set
-  int s[N];
-  for (int i=0; i&lt;N; i++) s[i] = readSensor();
-  sort(s, s+N);
-  int m = s[N/2];                     // median
-  if (!plausible(m)) return readStable(); // re-read if out-of-range
-  return m;
-}</code></pre>
-        <p><strong>Q3.</strong> Reduce ±10% random noise with smoothing (moving average or exponential filter):</p>
-        <pre><code>// Moving average (boxcar)
-const int K = 8;
-int buf[K], idx=0, count=0, sum=0;
-
-int smoothRead() {
-  int v = readSensor();
-  sum -= buf[idx];
-  buf[idx] = v;
-  sum += v;
-  idx = (idx + 1) % K;
-  count = min(count + 1, K);
-  return sum / count;                 // smoothed value
+        <p><strong>Question 1:</strong></p>
+        <img src="a4-graph.jpg" alt="PWM voltage at pin 9 graph" style="max-width:100%; height:auto; margin-bottom:0.5rem;" />
+        <p>This graph shows the PWM signal at pin 9, where the 5 V pulse widens from about 1 ms to 2 ms as the servo moves from 0° to 180°.</p>
+        <p><strong>Question 2:</strong></p>
+        <p>We can handle a 1% erroneous reading by taking multiple samples and calculating the median or average value to ignore outliers. This ensures that occasional faulty readings do not affect the final measurement and keeps the data accurate and stable.</p>
+        <pre><code>
+// Pseudocode
+int getReliableReading() {
+  const int N = 5;
+  int samples[N];
+  for (int i = 0; i < N; i++) {
+    samples[i] = readSensor();
+  }
+  sort(samples, samples + N);
+  return samples[N / 2]; // median value
 }
+        </code></pre>
+        <p>This code takes several readings from the sensor, sorts them, and returns the middle value (median). This method removes outliers to prevent occasional bad readings from affecting the results.</p>
+        <p><strong>Question 3:</strong></p>
+        <p>We can reduce the random ±10% noise by smoothing the sensor readings using a moving average or exponential filter. These methods average several recent values to make the output more stable and closer to the true measurement.</p>
+        <pre><code>
+// Pseudocode
+float filteredValue = 0;
+const float alpha = 0.2;  // smaller = smoother
 
-// Or exponential smoothing
-float y = 0;                          // filtered
-const float alpha = 0.2;              // 0&lt;alpha&lt;1 (smaller = smoother)
-int filteredRead() {
-  int x = readSensor();
-  y = alpha * x + (1 - alpha) * y;
-  return (int)(y + 0.5);
-}</code></pre>
-        <p><strong>Q4.</strong> Yes — I used AI (ChatGPT) to help format this page, write captions, and outline code comments. I reviewed and tested all changes; AI sped up documentation without replacing my own implementation or understanding.</p>
+int getSmoothedReading() {
+  int current = readSensor();
+  filteredValue = alpha * current + (1 - alpha) * filteredValue;
+  return (int)filteredValue;
+}
+</code></pre>
+        <p>This code smooths the sensor data by combining the new reading with a portion of the previous average. It filters out small random changes, making the readings steadier and more reliable.</p>
       </section>
       <section id="reflection">
         <h2>Reflection</h2>
-        <p>Placeholder for reflection on the Assignment 4 project experience, lessons learned, and future improvements.</p>
+        <p>This project helped me better understand how to integrate input and output devices using Arduino libraries. I learned how to manage sensor noise, handle data errors, and display real-time information clearly. Overall, it improved my confidence in troubleshooting and refining circuits through testing and iteration.</p>
       </section>
       <section id="ai-use">
         <h2>AI Use Statement</h2>
