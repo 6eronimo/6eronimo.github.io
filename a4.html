@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Assignment 4: Input → Output</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+      /* Force header content to stack vertically (rows) under the panda image */
+      .header { display: block; }
+      .header img { display: block; max-width: 100%; height: auto; margin-bottom: 1rem; }
+      .header section { display: block; width: 100%; margin: 1rem 0; }
+    </style>
+  </head>
+  <body>
+    <h1>Assignment 4: Libraries!</h1>
+    <div class="header">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Placeholder text for Assignment 4 overview. This section will describe the project goals and general description of the input-output control system.</p>
+      </section>
+      <section id="schematic">
+        <h2>Schematic (show values & calculation)</h2>
+        <img src="a4-schematic.jpg" alt="Schematic diagram of ultrasonic distance sensor circuit" style="max-width:100%; height:auto; margin-bottom:0.5rem;" />
+        <p>This schematic diagram shows the wiring connections between the ultrasonic sensor, LCD, and Arduino board. A 220 Ω resistor was used to limit current to the LEDs. Calculated using Ohm’s law: (5 V − 2 V) / 220 Ω ≈ 13 mA, which keeps the LED safely below its 20 mA rating.</p>
+      </section>
+      <section id="breadboard-circuit">
+        <h2>Breadboard Circuit</h2>
+        <img src="a4-circut.jpg" alt="Collage of breadboard circuit setup" style="max-width:100%; height:auto; margin-bottom:0.5rem;" />
+        <p>This collage photo shows the complete breadboard circuit wiring for the ultrasonic sensor and LCD.</p>
+      </section>
+      <section id="firmware-code">
+        <h2>Firmware Code</h2>
+        <pre><code>
+// ----- Libraries -----
+// Use the built-in LiquidCrystal library for parallel 16×2 LCDs
+#include <LiquidCrystal.h>
+// Use NewPing for reliable HC-SR04 timing and conversions
+#include <NewPing.h>
+
+// ----- LCD wiring (parallel) -----
+// Map LCD pins RS, E, D4, D5, D6, D7 to Arduino pins 12, 11, 5, 4, 3, 2
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+// Create the LCD object with the above pin mapping
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+// ----- Ultrasonic wiring -----
+// Define TRIG on D10 
+#define TRIG_PIN 10
+// Define ECHO on D9
+#define ECHO_PIN 9
+// Set a reasonable max distance in cm (200 cm = 2 m)
+#define MAX_DISTANCE_CM 200
+// Make the NewPing sonar object
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE_CM);
+
+void setup() {
+  // Initialize the LCD’s geometry (16 columns × 2 rows)
+  lcd.begin(16, 2);
+  // Show a quick splash so you know it booted
+  lcd.print("Ultrasonic (cm)");
+  // Short pause to read the splash
+  delay(800);
+  // Clear before live updates
+  lcd.clear();
+}
+
+void loop() {
+  // Take 5 pings and use the median to reduce random spikes
+  unsigned int uS = sonar.ping_median(5);
+  // Convert round-trip microseconds to centimeters
+  unsigned int cm = sonar.convert_cm(uS);
+
+  // Position cursor at first column, first row
+  lcd.setCursor(0, 0);
+  // Print a label
+  lcd.print("Distance:     ");
+
+  // Move to the second row
+  lcd.setCursor(0, 1);
+  // If cm == 0, NewPing didn’t get an echo
+  if (cm == 0) {
+    // Show an out-of-range message
+    lcd.print("Out of range   ");
+  } else {
+    // Print the distance value
+    lcd.print(cm);
+    // Print the unit and pad to clear any previous characters
+    lcd.print(" cm          ");
+  }
+
+  // Update about 5×/sec 
+  delay(200);
+}
+</code></pre>
+      </section>
+      <section id="operation-gif">
+        <h2>Operation GIF</h2>
+        <img src="a4-gif.gif" alt="Ultrasonic distance sensor in operation" style="max-width:100%; height:auto; margin-bottom:0.5rem;" />
+        <p>This GIF shows the LCD displaying real-time distance measurements from the ultrasonic sensor.</p>
+      </section>
+      <section id="graph">
+        <h2>Graph</h2>
+        <p>Placeholder for graph showing sensor readings or relevant data over time for Assignment 4.</p>
+      </section>
+      <section id="questions">
+        <h2>Questions</h2>
+        <p><strong>Q1.</strong> Pin 9 (servo signal) outputs a 5&nbsp;V digital PWM pulse every ~20&nbsp;ms; the high pulse widens from ~1.0&nbsp;ms (pos&nbsp;0) to ~2.0&nbsp;ms (pos&nbsp;180) as <code>myservo.write(pos)</code> steps every 100&nbsp;ms.</p>
+        <svg width="640" height="180" role="img" aria-label="PWM voltage vs time at pin 9">
+          <title>PWM voltage vs time at pin 9</title>
+          <!-- Axes -->
+          <line x1="40" y1="140" x2="620" y2="140" stroke="black" />
+          <line x1="40" y1="20"  x2="40"  y2="140" stroke="black" />
+          <text x="300" y="170" font-size="12">time (ms)</text>
+          <text x="5" y="18" font-size="12" transform="rotate(-90 10,18)">voltage (V)</text>
+          <text x="10" y="30" font-size="12">5V</text>
+          <text x="10" y="145" font-size="12">0V</text>
+          <!-- Two 20 ms periods: first ~1 ms high, second ~2 ms high -->
+          <!-- Period 1: 0–20 ms -->
+          <polyline points="40,140 60,140 60,40 68,40 68,140 160,140" fill="none" stroke="black" />
+          <!-- Period 2: 20–40 ms -->
+          <polyline points="160,140 180,140 180,40 200,40 200,140 280,140" fill="none" stroke="black" />
+          <!-- Dotted baseline and labels -->
+          <line x1="40" y1="40" x2="620" y2="40" stroke="gray" stroke-dasharray="4 4"/>
+          <text x="62" y="60" font-size="10">~1 ms high</text>
+          <text x="182" y="60" font-size="10">~2 ms high</text>
+          <text x="85" y="155" font-size="10">~20 ms</text>
+          <line x1="68" y1="150" x2="160" y2="150" stroke="black"/>
+          <text x="205" y="155" font-size="10">~20 ms</text>
+          <line x1="200" y1="150" x2="280" y2="150" stroke="black"/>
+        </svg>
+        <p><strong>Q2.</strong> Handle ~1% erroneous readings by validating and re‑sampling, or using a small median/majority vote:</p>
+        <pre><code>// Pseudocode
+int readStable() {
+  const int N = 5;                    // small sample set
+  int s[N];
+  for (int i=0; i&lt;N; i++) s[i] = readSensor();
+  sort(s, s+N);
+  int m = s[N/2];                     // median
+  if (!plausible(m)) return readStable(); // re-read if out-of-range
+  return m;
+}</code></pre>
+        <p><strong>Q3.</strong> Reduce ±10% random noise with smoothing (moving average or exponential filter):</p>
+        <pre><code>// Moving average (boxcar)
+const int K = 8;
+int buf[K], idx=0, count=0, sum=0;
+
+int smoothRead() {
+  int v = readSensor();
+  sum -= buf[idx];
+  buf[idx] = v;
+  sum += v;
+  idx = (idx + 1) % K;
+  count = min(count + 1, K);
+  return sum / count;                 // smoothed value
+}
+
+// Or exponential smoothing
+float y = 0;                          // filtered
+const float alpha = 0.2;              // 0&lt;alpha&lt;1 (smaller = smoother)
+int filteredRead() {
+  int x = readSensor();
+  y = alpha * x + (1 - alpha) * y;
+  return (int)(y + 0.5);
+}</code></pre>
+        <p><strong>Q4.</strong> Yes — I used AI (ChatGPT) to help format this page, write captions, and outline code comments. I reviewed and tested all changes; AI sped up documentation without replacing my own implementation or understanding.</p>
+      </section>
+      <section id="reflection">
+        <h2>Reflection</h2>
+        <p>Placeholder for reflection on the Assignment 4 project experience, lessons learned, and future improvements.</p>
+      </section>
+      <section id="ai-use">
+        <h2>AI Use Statement</h2>
+        <p>I used AI tools to help create and visualize my data, as well as format this webpage.</p>
+      </section>
+    </div>
+  </body>
+</html>
