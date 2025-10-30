@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Final Project: RubberbandTurretinator</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+      /* Minimal layout for proposal page */
+      .header { display: block; }
+      .header img { display: block; max-width: 100%; height: auto; margin-bottom: 1rem; }
+      .header section { display: block; width: 100%; margin: 1rem 0; }
+    </style>
+  </head>
+  <body>
+    <h1>Final Project Proposal — RubberbandTurretinator</h1>
+    <div class="header">
+      <section id="hero">
+        <img src="turret-sketch.jpg" alt="RubberbandTurretinator sketch" style="max-width:100%; height:auto; margin-bottom:0.75rem;" />
+        <p style="font-style:italic; margin:0 0 1rem 0;">Illustration placeholder — simple labeled sketch of rotating base, ultrasonic sensor, and servo-based rubber band launcher.</p>
+      </section>
+
+      <section id="concept">
+        <h2>Project Concept / Motivation</h2>
+        <p><strong>RubberbandTurretinator</strong>: I’m going to make a rotating turret that continuously scans. When an ultrasonic sensor detects a close object it stops rotation, launches a rubber band (missile) and releases to fire at the target, then resumes scanning for enemies.</p>
+      </section>
+
+      <section id="bom">
+        <h2>Anticipated Bill of Materials</h2>
+        <ul>
+          <li>Arduino Uno</li>
+          <li>Stepper motor (360 rotation) + motor driver</li>
+          <li>External power for DC motor (battery pack, etc)</li>
+          <li>Servo motor for firing mechanism</li>
+          <li>Ultrasonic sensor (HC-SR04)</li>
+          <li>Rubberbands + 3D-printed or laser-cut turret mount</li>
+          <li>Hot glue for adhesive</li>
+          <li>Wirings, resistors, diodes</li>
+        </ul>
+      </section>
+
+      <section id="timeline">
+        <h2>Timeline & Contingency Plans</h2>
+        <ol>
+          <li>Build turret base and mount motor + motor driver, integrate the sensor</li>
+          <li>Figure out the firing mechanism, tune the distances &amp; timings, make some photos and get the documentation started</li>
+          <li>Final polish, slides, work on page..</li>
+        </ol>
+        <h3>If something goes wrong</h3>
+        <ul>
+          <li>If DC motor/power issues → use servo motor</li>
+          <li>If servo strength is insufficient → switch to a stronger servo or design a lever with mechanical advantage.</li>
+        </ul>
+      </section>
+
+      <section id="links">
+        <h2>Links</h2>
+        <p>Add your slide once it’s in the class deck: <a href="https://docs.google.com/presentation/d/YOUR_SLIDE_ID">Google Slides entry</a></p>
+      </section>
+    </div>
+  </body>
+</html>
