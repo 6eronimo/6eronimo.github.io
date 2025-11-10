@@ -15,14 +15,14 @@
     </style>
   </head>
   <body>
-    <h1>Assignment 4: High(er) voltage and transistors!!</h1>
+    <h1>High(er) voltage and transistors!!</h1>
     <div class="header">
       <section id="overview">
         <h2>Overview</h2>
         <p>This project demonstrates how to use a transistor to safely control higher voltage components like motors or LED arrays with an Arduino. It focuses on using a transistor as a switch, managing voltage levels, and protecting the microcontroller while reinforcing key concepts like current flow and transistor saturation.</p>
       </section>
       <section id="schematic">
-        <h2>Schematic (show values & calculation)</h2>
+        <h2>Schematic</h2>
         <img src="a5-schematic.jpg" alt="Schematic diagram of high voltage and transistor circuit" style="max-width:100%; height:auto; margin-bottom:0.5rem;" />
         <p>This schematic diagram shows the transistor circuit configuration and voltage calculations for Assignment 5. A 220 Ω resistor was used on the transistor’s base to limit current and protect both the Arduino and the transistor from excessive draw. Additionally, a 100 µF capacitor was added to help filter and stabilize voltage fluctuations, reducing interference and ensuring smoother operation during switching.</p>
       </section>
@@ -32,7 +32,6 @@
       </section>
       <section id="firmware-code">
         <h2>Firmware Code</h2>
-        <section id="firmware-code">
         <pre><code>// Include the IRremote library so the Arduino can read signals from the IR receiver
 #include <IRremote.hpp>
 
@@ -100,7 +99,6 @@ void loop() {
   IrReceiver.resume();
 }</code></pre>
       </section>
-      </section>
       <section id="operation-gif">
         <h2>Operation GIF</h2>
         <img src="a5-gif.gif" alt="Operation demonstration of transistor circuit" style="max-width:100%; height:auto; margin-bottom:0.5rem;" />
@@ -108,7 +106,7 @@ void loop() {
       </section>
       <section id="questions">
         <h2>Questions</h2>
-        <!-- Content goes here -->
+        <p> According to the DMT6009LCT MOSFET datasheet, the absolute maximum continuous drain current (between pins 2 and 3) is <strong>37.2 A</strong> at a case temperature of 25 °C and <strong>29.8 A</strong> at 100 °C. It can also handle a pulsed drain current of up to <strong>80 A</strong> for short 10 µs pulses (1% duty cycle). Therefore the maximum continuous current between the drain and source pins is <strong>37.2 A</strong>.</p>
       </section>
     </div>
   </body>
