@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>A6 – Joystick + LED + WebSerial</title>
+  </head>
+  <body>
+    <main>
+      <h1>A6: Talking to the Web: Joystick + LED</h1>
+      <p>Click "Connect to Arduino" to start.</p>
+    </main>
+
+    <!-- p5.js core library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+
+    <!-- p5.webserial helper (must exist in this folder) -->
+    <script src="p5.webserial.js"></script>
+
+    <!-- your sketch code -->
+    <script src="sketch.js"></script>
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        For this assignment, I created an interactive webpage using p5.js and WebSerial
+        that communicates with my Arduino in real time. The Arduino reads two inputs 
+        from the joystick (X and Y axes) and sends these values to the webpage, which 
+        updates the position of a circle based on the joystick's direction. The Arduino 
+        also controls an LED output whenever the joystick is moved outside the 
+        centered deadzone, the LED turns on. When the joystick returns to rest, the LED 
+        turns off.
+      </p>
+      <p>
+        This satisfies the assignment requirements: the webpage updates based on input 
+        from the Arduino, and the Arduino responds to real-world input from the joystick. 
+        The joystick supplies two inputs (X and Y), and the LED serves as the output device. 
+        This project integrates custom p5.js interaction, WebSerial communication, and 
+        physical computing.
+      </p>
+    </section>
+  </body>
+</html>
