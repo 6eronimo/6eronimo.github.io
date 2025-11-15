@@ -1,4 +1,4 @@
-const BAUD_RATE = 9600; // This should match the baud rate in your Arduino sketch
+const BAUD_RATE = 9600; 
 
 let port, connectBtn; // Declare global variables
 
@@ -9,15 +9,15 @@ let joyY = 512;   // raw joystick Y reading
 let circleY = 25; // circle's y position on the canvas
 
 function setup() {
-  setupSerial(); // Run our serial setup function (below)
+  setupSerial(); // Run serial setup function (below)
 
   // Create a canvas
   createCanvas(1700, 600);
 
-  // Use HSB color mode like your second example
+  // Use HSB color mode 
   colorMode(HSB);
 
-  // Text settings (you can keep/change as needed)
+  // Text settings 
   textFont("system-ui", 20);
   textAlign(CENTER, CENTER);
 }
@@ -30,7 +30,7 @@ function draw() {
   // Read from the port until the newline character
   let str = port.readUntil("\n");
 
-  // If we didn't read anything, keep using the last value
+  // If didn't read anything, keep using the last value
   if (str.length > 0) {
     // Clean the string
     str = str.trim();
@@ -53,7 +53,6 @@ function draw() {
   }
 
   // Map joystick X (0–1023) to screen range
-  // This mimics your "moving across x axis" idea
   circleX = map(joyX, 0, 1023, -120, width + 120);
   circleY = map(joyY, 0, 1023, -120, height + 120);
 
@@ -64,7 +63,7 @@ function draw() {
   // Clear the background
   background(0);
 
-  // Set fill color based on circleX (like your hue idea)
+  // Set fill color based on circleX 
   fill((circleX / 3) % 360, 90, 90);
 
   // Draw the circle controlled by the joystick
@@ -81,7 +80,7 @@ function draw() {
   describe("circle moves horizontally based on joystick position");
 }
 
-// --- SERIAL HELPER FUNCTIONS (unchanged from your working code) ---
+// SERIAL HELPER FUNCTIONS
 
 function setupSerial() {
   port = createSerial();
@@ -89,7 +88,7 @@ function setupSerial() {
   // Check to see if there are any ports we have used previously
   let usedPorts = usedSerialPorts();
   if (usedPorts.length > 0) {
-    // If there are ports we've used, open the first one
+    // If there are ports used, open the first one
     port.open(usedPorts[0], BAUD_RATE);
   }
 
@@ -107,7 +106,7 @@ function checkPort() {
     background("gray");
     return false;
   } else {
-    // Otherwise we are connected
+    // Otherwise connected
     connectBtn.html("Disconnect");
     return true;
   }
@@ -116,10 +115,10 @@ function checkPort() {
 function onConnectButtonClicked() {
   // When the connect button is clicked
   if (!port.opened()) {
-    // If the port is not opened, we open it
+    // If the port is not opened, open it
     port.open(BAUD_RATE);
   } else {
-    // Otherwise, we close it!
+    // Otherwise, close it
     port.close();
   }
 }
